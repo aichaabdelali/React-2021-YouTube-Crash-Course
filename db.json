@@ -10,7 +10,13 @@
       "id": 3,
       "text": "important meeting",
       "day": "January 8th",
-      "reminder": true
+      "reminder": false
+    },
+    {
+      "text": "sleep",
+      "day": "everyday",
+      "reminder": true,
+      "id": 4
     }
   ]
 }
