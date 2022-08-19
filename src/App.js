@@ -1,7 +1,11 @@
 import { useState, useEffect } from "react";
+import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
 import AddTask from "./components/AddTask";
 import Header from "./components/Header";
+import Footer from "./components/Footer";
 import Tasks from "./components/Tasks";
+import TaskDetails from "./components/TaskDetails";
+import About from "./components/About";
 
 function App() {
   const [showAddTask, setShowAddTask] = useState(false);
@@ -73,22 +77,40 @@ function App() {
   };
 
   return (
-    <div className="container">
-      <Header
-        onAdd={() => {
-          setShowAddTask(!showAddTask);
-        }}
-        showAdd={showAddTask}
-      />
-      {showAddTask && <AddTask onAdd={addTask} />}
-      {tasks.length > 0 ? (
-        <Tasks tasks={tasks} onDelete={deleteTask} onToggle={toggleReminder} />
-      ) : (
-        <h3 style={{ textAlign: "center", color: "#787A91" }}>
-          No Tasks For Now
-        </h3>
-      )}
-    </div>
+    <Router>
+      <div className="container">
+        <Header
+          onAdd={() => {
+            setShowAddTask(!showAddTask);
+          }}
+          showAdd={showAddTask}
+        />
+        <Routes>
+          <Route
+            path="/"
+            element={
+              <>
+                {showAddTask && <AddTask onAdd={addTask} />}
+                {tasks.length > 0 ? (
+                  <Tasks
+                    tasks={tasks}
+                    onDelete={deleteTask}
+                    onToggle={toggleReminder}
+                  />
+                ) : (
+                  <h3 style={{ textAlign: "center", color: "#787A91" }}>
+                    No Tasks For Now
+                  </h3>
+                )}
+              </>
+            }
+          />
+          <Route path="/about" element={<About />} />
+          <Route path="/task/:id" element={<TaskDetails />} />
+        </Routes>
+        <Footer />
+      </div>
+    </Router>
   );
 }
 
